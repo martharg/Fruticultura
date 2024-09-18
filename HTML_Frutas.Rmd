@@ -1,0 +1,64 @@
+---
+title: "Regresión Simple"
+author: "Dra. Martha Elva Ramírez Guzmán"
+date: "2024-09-18"
+output:
+  html_document:
+    toc: true        # Habilita el índice
+    toc_depth: 2     # Define la profundidad del índice
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Cargar librerías necesarias
+En este momento vamos a cargar las librerías necesarias para realizar el análisis de los datos.
+
+```{r, message=FALSE, warning=FALSE}
+library(ggplot2)
+library(dplyr)
+```
+
+# Cargar datos
+Vamos a cargar los datos de producción de frutas en California.
+```{r}
+datos <- data.frame(
+  Año = c(2010:2019),
+  Producción = c(1000, 1200, 1100, 1300, 1050, 1250, 1150, 1400, 1080, 1280),
+  Temperatura = c(18.5, 19.2, 18.8, 20.1, 18.2, 19.5, 18.9, 20.5, 18.4, 19.8),
+  Precipitación = c(500, 550, 450, 600, 400, 525, 475, 650, 420, 575)
+)
+```
+
+# Visualizar datos
+Vamos a visualizar los datos de producción de frutas en California.
+```{r}
+ggplot(datos, aes(x = Año, y = Producción)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Producción de frutas en California", x = "Año", y = "Producción (toneladas)")+
+  theme_minimal()
+```
+
+# Modelar producción utilizando regresión lineal
+Vamos a modelar la producción de frutas utilizando regresión lineal.
+```{r}
+modelo <- lm(Producción ~ Temperatura + Precipitación, datos)
+```
+
+# Resumen del modelo
+Vamos a mostrar un resumen del modelo de regresión lineal.
+```{r}
+summary(modelo)
+```
+
+# Predecir producción para el año 2020
+Vamos a predecir la producción de frutas para el año 2020.
+```{r}
+nuevo_datos <- data.frame(
+  Temperatura = 19.5,
+  Precipitación = 525
+)
+predict(modelo, nuevo_datos)
+```
